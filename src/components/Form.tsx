@@ -1,14 +1,32 @@
 import { ChangeEvent, HtmlHTMLAttributes, useState } from "react";
 import FormField from "./FormField";
-const formFields = [
+
+interface Field {
+  id: number;
+  label: string;
+  type: string;
+  value: string;
+}
+const formFields: Field[] = [
   { id: 1, label: "First Name", type: "text", value: "" },
   { id: 2, label: "Last Name", type: "text", value: "" },
   { id: 3, label: "Email", type: "email", value: "" },
   { id: 4, label: "Date of Birth", type: "date", value: "" },
 ];
+
+const initialState: () => Field[] = () => {
+  const formFieldsJSON = localStorage.getItem("formFields");
+  const persistentFormFields = formFieldsJSON
+    ? JSON.parse(formFieldsJSON)
+    : formFields;
+  return persistentFormFields;
+};
+const saveFormData = (currentState: any[]) => {
+  localStorage.setItem("formFields", JSON.stringify(currentState));
+};
 export function Form(props: { closeFormCB: () => void }) {
   const [newField, setNewField] = useState("");
-  const [state, setState] = useState(formFields);
+  const [state, setState] = useState(initialState());
 
   const addField = () => {
     setState([
@@ -27,18 +45,12 @@ export function Form(props: { closeFormCB: () => void }) {
     setState(state.filter((field) => field.id !== id));
   };
 
-  const onInputFieldChangeCB = (i: number, e: any) => {
+  const onInputFieldChangeCB = (id: number, e: any) => {
     let elements = [...state];
-    let input = elements.filter((value, index) => {
-      return elements[index].id === i;
-    });
+    elements = elements.map((field) =>
+      field.id === id ? { ...field, value: e.target.value } : field
+    );
 
-    const inputField = input[0];
-
-    inputField.value = e.target.value;
-    const index = elements.indexOf(inputField);
-
-    elements[index] = inputField;
     setState(elements);
   };
 
@@ -89,10 +101,10 @@ export function Form(props: { closeFormCB: () => void }) {
 
       <div className="flex gap-4">
         <button
-          type="submit"
+          onClick={(_) => saveFormData(state)}
           className="bg-blue-700 text-white rounded-xl text-xl p-2"
         >
-          Submit
+          Save
         </button>
         <button
           className="bg-blue-700 text-white rounded-xl text-xl p-2 ml-2"
