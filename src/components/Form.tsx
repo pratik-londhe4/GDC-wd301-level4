@@ -64,7 +64,7 @@ export function Form(props: { closeFormCB: () => void }) {
   };
 
   return (
-    <div className="flex flex-col p-4 divide-y divide-dotted">
+    <div className="flex flex-col p-4 divide-y divide">
       <div>
         {state.map((f) => {
           return (
