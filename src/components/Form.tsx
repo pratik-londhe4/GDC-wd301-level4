@@ -56,10 +56,9 @@ export function Form(props: { closeFormCB: () => void }) {
 
   const clearForm = () => {
     let elements = [...state];
-    elements = elements.map((value, index) => {
-      elements[index].value = "";
-      return value;
-    });
+    elements = elements.map((field) =>
+      field.value !== "" ? { ...field, value: "" } : field
+    );
 
     setState(elements);
   };
