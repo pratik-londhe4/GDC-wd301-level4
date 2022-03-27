@@ -6,7 +6,7 @@ interface FormData {
   title: string;
   formFields: Field[];
 }
-interface Field {
+export interface Field {
   id: number;
   label: string;
   type: string;
@@ -26,7 +26,7 @@ const getLocalForms: () => FormData[] = () => {
   return persistentFormFields;
 };
 
-const saveLocalForms = (localForms: FormData[]) => {
+export const saveLocalForms = (localForms: FormData[]) => {
   localStorage.setItem("savedForms", JSON.stringify(localForms));
 };
 const saveFormData = (currentState: FormData) => {
