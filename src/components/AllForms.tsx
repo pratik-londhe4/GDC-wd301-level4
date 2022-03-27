@@ -26,6 +26,10 @@ export function AllForms(props: { closeFormCB: () => void }) {
     setState(modifiedForms);
     saveLocalForms(modifiedForms);
   };
+
+  const saveForm = () => {
+    setState(initialState());
+  };
   return (
     <div>
       <div className="flex flex-row gap-2">
@@ -42,6 +46,7 @@ export function AllForms(props: { closeFormCB: () => void }) {
           onClick={(_) => {
             setOpenedForm(-1);
             setNewForm(false);
+            saveForm();
           }}
         >
           Close Form
