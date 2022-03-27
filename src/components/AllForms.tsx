@@ -56,7 +56,7 @@ export function AllForms(props: { closeFormCB: () => void }) {
             state.map((form) => {
               return (
                 <div className="flex flex-row p-4 gap-4 m-3 shadow-xl rounded-xl hover:-translate-y-1 hover:scale-102 hover:bg-blue-200 duration-300">
-                  <div className="flex flex-col">
+                  <div className="flex flex-col" id={form.id.toString()}>
                     <p>{form.title}</p>
                     <p className="bg-gray-200">
                       {form.formFields.length} fields
