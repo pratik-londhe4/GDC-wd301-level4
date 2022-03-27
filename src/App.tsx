@@ -4,11 +4,12 @@ import Headers from "./components/Headers";
 import { useState } from "react";
 import Home from "./components/Home";
 import { Form } from "./components/Form";
+import { AllForms } from "./components/AllForms";
 function App() {
   const [state, setState] = useState("Home");
 
-  const openForm = () => {
-    setState("Form");
+  const viewAllForms = () => {
+    setState("AllForms");
   };
   const closeForm = () => {
     setState("Home");
@@ -19,9 +20,9 @@ function App() {
         <Headers title="Welcome to React-Typescript with Tailwind-css" />
 
         {state === "Home" ? (
-          <Home openFormCB={openForm} />
+          <Home viewAllFormsCB={viewAllForms} />
         ) : (
-          <Form closeFormCB={closeForm}></Form>
+          <AllForms closeFormCB={closeForm} />
         )}
       </div>
     </AppContainer>
