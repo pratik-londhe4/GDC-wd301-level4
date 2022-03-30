@@ -1,21 +1,31 @@
 import logo from "../logo.svg";
+import { AllForms } from "./AllForms";
+import { useQueryParams } from "raviger";
+import { useState } from "react";
+export default function Home() {
+  const [{ search }, setQueryParams] = useQueryParams();
+  const [searchString, setSearchString] = useState("");
 
-export default function Home(props: { viewAllFormsCB: () => void }) {
   return (
     <div className="flex flex-col justify-center">
-      <div className="flex">
-        <img className="h-48 flex-1" src={logo} />
-        <div className="flex-1 flex items-center">
-          <p>Welcome to the Home Page</p>
-        </div>
-      </div>
-
-      <button
-        className="bg-blue-700 text-white rounded-xl text-xl p-2 ml-2"
-        onClick={props.viewAllFormsCB}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setQueryParams({ search: searchString });
+        }}
       >
-        View Forms
-      </button>
+        <input
+          value={searchString}
+          type="text"
+          name="search"
+          className="border-2 w-full mt-6 border-gray-200 rounded-lg p-2 my-2 flex-1"
+          onChange={(e) => {
+            e.preventDefault();
+            setSearchString(e.target.value);
+          }}
+        />
+      </form>
+      <AllForms search={search} />
     </div>
   );
 }

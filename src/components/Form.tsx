@@ -1,7 +1,8 @@
+import { Link, navigate } from "raviger";
 import { useEffect, useRef, useState } from "react";
 import FormField from "./FormField";
 
-interface FormData {
+export interface FormData {
   id: number;
   title: string;
   formFields: Field[];
@@ -41,7 +42,7 @@ export function Form(props: { id: any }) {
   const initialState: () => FormData = () => {
     const localForms = getLocalForms();
 
-    if (props.id !== null) {
+    if (props.id !== 0) {
       return localForms.filter((form) => form.id === props.id)[0];
     }
 
@@ -58,7 +59,9 @@ export function Form(props: { id: any }) {
   const [state, setState] = useState(() => initialState());
 
   const titleRef = useRef<HTMLInputElement>(null);
-
+  useEffect(() => {
+    state.id !== props.id && navigate(`/form/${state.id}`);
+  }, [state.id, props.id]);
   useEffect(() => {
     const oldTitle = document.title;
     document.title = "Form Editor";
@@ -164,7 +167,6 @@ export function Form(props: { id: any }) {
           Add Field
         </button>
       </div>
-
       <div className="flex gap-4">
         <button
           onClick={(_) => saveFormData(state)}
@@ -179,7 +181,14 @@ export function Form(props: { id: any }) {
         >
           Clear Form
         </button>
+        <Link
+          href="/"
+          className="bg-blue-700 text-white rounded-xl text-xl p-2 ml-2"
+        >
+          Close Form
+        </Link>
       </div>
+      s
     </div>
   );
 }
