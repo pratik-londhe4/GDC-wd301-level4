@@ -21,7 +21,7 @@ export default function Quiz(props: { id: number }) {
   getCurrentFormFields(props.id);
   return (
     <div className="mt-4">
-      <p className="p-2 float-right">{`${fields.length}/${index + 1}`}</p>
+      <p className="p-2 float-right">{`${index + 1}/${fields.length}`}</p>
 
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="p-2">
@@ -40,8 +40,8 @@ export default function Quiz(props: { id: number }) {
             ></input>
             <div className="flex flex-row">
               <button
-                className="bg-blue-700 text-white font-bold rounded-xl py-2 px-4 my-4 m-1"
-                hidden={index + 1 == fields.length}
+                className="bg-blue-700 text-white font-bold rounded-xl py-2 px-4 my-4 m-1 disabled:bg-blue-200"
+                disabled={index + 1 == fields.length}
                 onClick={(_) => {
                   const i = index;
                   setIndex(i + 1);
@@ -50,8 +50,8 @@ export default function Quiz(props: { id: number }) {
                 Next
               </button>
               <button
-                className="bg-blue-700 text-white font-bold rounded-xl py-2 px-4 my-4 m-1"
-                hidden={index == 0}
+                className="bg-blue-700 text-white font-bold rounded-xl py-2 px-4 my-4 m-1 disabled:bg-blue-200"
+                disabled={index == 0}
                 onClick={(_) => {
                   const i = index;
                   setIndex(i - 1);
