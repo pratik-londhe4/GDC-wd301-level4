@@ -27,14 +27,14 @@ export default function Quiz(props: { id: number }) {
         <div className="p-2">
           {fields.map((field: Field, i: Number) => {
             return i === index ? (
-              <div>
-                <label>{field.label}</label>
+              <div key={field.value}>
+                <label key={field.label}>{field.label}</label>
                 <div className="flex gap-2 flex-col">
                   <input
                     className="border-2 border-gray-200 rounded-lg p-2 m-2 w-full"
-                    id={fields[index].id}
+                    key={field.id.toString()}
                     value={answers[index]}
-                    type={fields[index].type}
+                    type={field.type}
                     onChange={(e) => {
                       const ans = [...answers];
                       ans[index] = e.target.value;
