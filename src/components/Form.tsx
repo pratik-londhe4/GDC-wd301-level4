@@ -109,7 +109,7 @@ export function Form(props: { id: any }) {
     setState({
       ...state,
       formFields: state.formFields.map((field) =>
-        field.id === id ? { ...field, value: e.target.value } : field
+        field.id === id ? { ...field, label: e.target.value } : field
       ),
     });
   };

@@ -14,8 +14,8 @@ export default function FormField(props: {
       <div className="flex gap-2">
         <input
           className="border-2 border-gray-200 rounded-lg p-2 m-2 w-full"
-          type={props.type}
-          value={props.value}
+          type="text"
+          value={props.label}
           onChange={(e) => props.onChangeCB(props.id, e)}
         />
         <button
