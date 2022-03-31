@@ -26,7 +26,7 @@ export default function Quiz(props: { id: number }) {
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="p-2">
           {fields.map((field: Field, i: Number) => {
-            return i == index ? (
+            return i === index ? (
               <div>
                 <label>{field.label}</label>
                 <div className="flex gap-2 flex-col">
@@ -47,11 +47,19 @@ export default function Quiz(props: { id: number }) {
               ""
             );
           })}
+          <div className="flex flex-col p-2">
+            <p className="bg-red-200">
+              {fields.length == 0 ? "This Form has no questions" : ""}
+            </p>
+            <p className="bg-red-200">
+              {fields.length == index + 1 ? "Last Question" : ""}
+            </p>
+          </div>
 
           <div className="flex flex-row">
             <button
               className="bg-blue-700 text-white font-bold rounded-xl py-2 px-4 my-4 m-1 disabled:bg-blue-200"
-              disabled={index + 1 == fields.length}
+              disabled={index + 1 == fields.length || fields.length == 0}
               onClick={(_) => {
                 const i = index;
                 setIndex(i + 1);
@@ -61,7 +69,7 @@ export default function Quiz(props: { id: number }) {
             </button>
             <button
               className="bg-blue-700 text-white font-bold rounded-xl py-2 px-4 my-4 m-1 disabled:bg-blue-200"
-              disabled={index == 0}
+              disabled={index == 0 || fields.length == 0}
               onClick={(_) => {
                 const i = index;
                 setIndex(i - 1);
