@@ -8,8 +8,12 @@ import Quiz from "../components/Quiz";
 const routes = {
   "/": () => <Home />,
   "/about": () => <About />,
-  "/form/:id": ({ id }: { id: string }) => <Form id={+id}></Form>,
-  "/preview/:id": ({ id }: { id: string }) => <Quiz id={+id}></Quiz>,
+  "/form/:formId": ({ formId }: { formId: string }) => (
+    <Form id={+formId}></Form>
+  ),
+  "/preview/:formId": ({ formId }: { formId: string }) => (
+    <Quiz id={+formId}></Quiz>
+  ),
 };
 export default function AppRouter() {
   const routeResult = useRoutes(routes);
