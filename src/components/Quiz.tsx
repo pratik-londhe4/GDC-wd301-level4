@@ -37,8 +37,10 @@ export default function Quiz(props: { id: number }) {
                     type={field.type}
                     onChange={(e) => {
                       const ans = [...answers];
-                      ans[index] = e.target.value;
-                      setAnswers(ans);
+                      const NewAns = ans.map((answer: string, i: number) => {
+                        return i === index ? (answer = e.target.value) : answer;
+                      });
+                      setAnswers(NewAns);
                     }}
                   ></input>
                 </div>
