@@ -1,11 +1,7 @@
 import { Link } from "raviger";
 import { useState } from "react";
-import { Form, Field, saveLocalForms } from "./Form";
-interface FormData {
-  id: number;
-  title: string;
-  formFields: Field[];
-}
+import { saveLocalForms } from "./Form";
+import { FormData } from "../types/formTypes";
 const getLocalForms: () => FormData[] = () => {
   const savedFormsJSON = localStorage.getItem("savedForms");
   const persistentFormFields = savedFormsJSON ? JSON.parse(savedFormsJSON) : [];

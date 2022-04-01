@@ -1,18 +1,8 @@
 import { Link, navigate } from "raviger";
 import { useEffect, useRef, useState } from "react";
 import FormField from "./FormField";
+import { FormData, Field } from "../types/formTypes";
 
-export interface FormData {
-  id: number;
-  title: string;
-  formFields: Field[];
-}
-export interface Field {
-  id: number;
-  label: string;
-  type: string;
-  value: string;
-}
 const formFields: Field[] = [
   { id: 1, label: "First Name", type: "text", value: "" },
   { id: 2, label: "Last Name", type: "text", value: "" },
