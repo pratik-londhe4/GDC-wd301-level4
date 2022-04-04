@@ -4,10 +4,16 @@ import FormField from "./FormField";
 import { FormData, Field } from "../types/formTypes";
 
 const formFields: Field[] = [
-  { id: 1, label: "First Name", type: "text", value: "" },
-  { id: 2, label: "Last Name", type: "text", value: "" },
-  { id: 3, label: "Email", type: "email", value: "" },
-  { id: 4, label: "Date of Birth", type: "date", value: "" },
+  { kind: "text", id: 1, label: "First Name", type: "text", value: "" },
+  { kind: "text", id: 2, label: "Last Name", type: "text", value: "" },
+  { kind: "text", id: 3, label: "Email", type: "email", value: "" },
+  {
+    kind: "dropdown",
+    id: 4,
+    label: "Priority",
+    options: ["High", "Low"],
+    value: "",
+  },
 ];
 
 const getLocalForms: () => FormData[] = () => {
@@ -79,6 +85,7 @@ export function Form(props: { id: any }) {
         {
           id: Number(new Date()),
           label: newField,
+          kind: "text",
           type: "text",
           value: "",
         },
@@ -127,17 +134,32 @@ export function Form(props: { id: any }) {
       />
       <div>
         {state.formFields.map((f) => {
-          return (
-            <FormField
-              label={f.label}
-              id={f.id}
-              key={f.id}
-              type={f.type}
-              value={f.value}
-              removeFieldCB={removeField}
-              onChangeCB={onInputFieldChangeCB}
-            ></FormField>
-          );
+          switch (f.kind) {
+            case "text":
+              return (
+                <FormField
+                  label={f.label}
+                  id={f.id}
+                  key={f.id}
+                  type={f.type}
+                  value={f.value}
+                  removeFieldCB={removeField}
+                  onChangeCB={onInputFieldChangeCB}
+                ></FormField>
+              );
+            case "dropdown":
+              return (
+                <div>
+                  {" "}
+                  <select>
+                    <option>Select</option>
+                    {f.options.map((option) => {
+                      <option value={option}>{option}</option>;
+                    })}
+                  </select>
+                </div>
+              );
+          }
         })}
       </div>
       <div className="flex gap-2">

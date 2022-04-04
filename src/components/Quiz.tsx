@@ -17,6 +17,53 @@ export default function Quiz(props: { id: number }) {
 
   const [index, setIndex] = useState(0);
 
+  const renderField = (
+    field: Field,
+    index: number,
+    answers: string[],
+    setAnswers: CallableFunction
+  ) => {
+    switch (field.kind) {
+      case "text":
+        return (
+          <input
+            className="border-2 border-gray-200 rounded-lg p-2 m-2 w-full"
+            key={field.id.toString()}
+            value={answers[index]}
+            type={field.type}
+            onChange={(e) => {
+              const ans = [...answers];
+              const updatedAnswers = ans.map((field, i) => {
+                return i == index ? e.target.value : "";
+              });
+              setAnswers(updatedAnswers);
+            }}
+          ></input>
+        );
+
+      case "dropdown":
+        return (
+          <div>
+            <select
+              value={answers[index]}
+              onChange={(e) => {
+                const ans = [...answers];
+                const updatedAnswers = ans.map((field, i) => {
+                  return i == index ? e.target.value : "";
+                });
+                setAnswers(updatedAnswers);
+              }}
+            >
+              <option value="Select">Select</option>
+              {field.options.map((option) => {
+                return <option value={option}>{option}</option>;
+              })}
+            </select>
+          </div>
+        );
+    }
+  };
+
   getCurrentFormFields(props.id);
   return (
     <div className="mt-4">
@@ -28,19 +75,8 @@ export default function Quiz(props: { id: number }) {
             return i === index ? (
               <div key={field.value}>
                 <label key={field.label}>{field.label}</label>
-                <div className="flex gap-2 flex-col">
-                  <input
-                    className="border-2 border-gray-200 rounded-lg p-2 m-2 w-full"
-                    key={field.id.toString()}
-                    value={answers[index]}
-                    type={field.type}
-                    onChange={(e) => {
-                      const ans = [...answers];
-                      ans[index] = e.target.value;
-                      setAnswers(ans);
-                    }}
-                  ></input>
-                </div>
+                <div className="flex gap-2 flex-col"></div>
+                {renderField(field, index, answers, setAnswers)}
               </div>
             ) : (
               ""
