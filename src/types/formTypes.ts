@@ -25,5 +25,13 @@ type dropDownField = {
   value : string
 
 }
-export type Field =  textField | dropDownField
+
+type radioButtonField = {
+  id : number,
+  kind : "radio"
+  label : string , 
+  options : string[],
+  value : string
+}
+export type Field =  textField | dropDownField | radioButtonField
 

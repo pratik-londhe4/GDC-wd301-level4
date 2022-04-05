@@ -3,9 +3,16 @@ import { useEffect, useRef, useState } from "react";
 import FormField from "./FormField";
 import { FormData, Field } from "../types/formTypes";
 
+const fieldKinds: string[] = ["text", "dropdown"];
 const formFields: Field[] = [
   { kind: "text", id: 1, label: "First Name", type: "text", value: "" },
-  { kind: "text", id: 2, label: "Last Name", type: "text", value: "" },
+  {
+    kind: "radio",
+    id: 2,
+    label: "When You like your coffee?",
+    options: ["Morning", "Night"],
+    value: "",
+  },
   { kind: "text", id: 3, label: "Email", type: "email", value: "" },
   {
     kind: "dropdown",
@@ -54,6 +61,7 @@ export function Form(props: { id: any }) {
   };
   const [newField, setNewField] = useState("");
   const [state, setState] = useState(() => initialState());
+  const [selectedType, setSelectedType] = useState("text");
 
   const titleRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -78,7 +86,7 @@ export function Form(props: { id: any }) {
       clearTimeout(timeout);
     };
   }, [state]);
-  const addField = () => {
+  const addField = (kind: string) => {
     setState({
       ...state,
       formFields: [
@@ -151,34 +159,61 @@ export function Form(props: { id: any }) {
             case "dropdown":
               return (
                 <div>
-                  {" "}
                   <select>
                     <option>Select</option>
                     {f.options.map((option) => {
-                      <option value={option}>{option}</option>;
+                      return <option value={option}>{option}</option>;
                     })}
                   </select>
+                </div>
+              );
+
+            case "radio":
+              return (
+                <div>
+                  <label>{f.label}</label>
+                  {f.options.map((opt) => {
+                    return (
+                      <div>
+                        <input type="radio" name="radio"></input>
+                        <label> {opt}</label>
+                      </div>
+                    );
+                  })}
                 </div>
               );
           }
         })}
       </div>
       <div className="flex gap-2">
-        <input
-          value={newField}
-          type="text"
-          className="border-2 border-gray-200 rounded-lg p-2 my-2 flex-1"
-          onChange={(e) => {
-            e.preventDefault();
-            setNewField(e.target.value);
-          }}
-        />
-        <button
-          className="bg-blue-700 text-white font-bold rounded-xl py-2 px-4 my-4"
-          onClick={addField}
-        >
-          Add Field
-        </button>
+        <div className="flex flex-row gap-2">
+          <input
+            value={newField}
+            type="text"
+            className="border-2 border-gray-200 rounded-lg p-2 my-2 flex-1"
+            onChange={(e) => {
+              e.preventDefault();
+              setNewField(e.target.value);
+            }}
+          />
+          <select
+            value={selectedType}
+            onChange={(e) => {
+              setSelectedType(e.target.value);
+            }}
+          >
+            <option>Select Kind</option>
+            {fieldKinds.map((kind) => (
+              <option value={kind}>{kind}</option>
+            ))}
+          </select>
+          <button
+            className="bg-blue-700 text-white font-bold rounded-xl py-2 px-4 my-4"
+            onClick={(_) => addField(selectedType)}
+          >
+            Add Field
+          </button>
+        </div>
       </div>
       <div className="flex gap-4">
         <button
@@ -201,7 +236,6 @@ export function Form(props: { id: any }) {
           Close Form
         </Link>
       </div>
-      s
     </div>
   );
 }
