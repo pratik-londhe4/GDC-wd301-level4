@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Field, FormData } from "../types/formTypes";
+import MultiSelect from "./MultiSelect";
 const getCurrentFormFields = (id: number) => {
   const savedFormsJSON = localStorage.getItem("savedForms");
   const savedForms = JSON.parse(savedFormsJSON || "");
@@ -44,21 +45,12 @@ export default function Quiz(props: { id: number }) {
       case "dropdown":
         return (
           <div>
-            <select
-              value={answers[index]}
-              onChange={(e) => {
-                const ans = [...answers];
-                const updatedAnswers = ans.map((field, i) => {
-                  return i == index ? e.target.value : "";
-                });
-                setAnswers(updatedAnswers);
-              }}
-            >
-              <option value="Select">Select</option>
-              {field.options.map((option) => {
-                return <option value={option}>{option}</option>;
-              })}
-            </select>
+            <MultiSelect
+              index={index}
+              setAnswers={setAnswers}
+              field={field}
+              answers={answers}
+            />
           </div>
         );
     }

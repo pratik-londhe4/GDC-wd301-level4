@@ -12,6 +12,7 @@ const formFields: Field[] = [
     id: 4,
     label: "Priority",
     options: ["High", "Low"],
+    selected: [""],
     value: "",
   },
 ];

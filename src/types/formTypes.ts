@@ -21,6 +21,7 @@ type dropDownField = {
   kind : "dropdown",
   label : string
   options : string[]
+  selected : string[]
   value : string
 
 }
