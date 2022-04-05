@@ -69,6 +69,21 @@ export default function Quiz(props: { id: number }) {
                 <label key={field.label}>{field.label}</label>
                 <div className="flex gap-2 flex-col"></div>
                 {renderField(field, index, answers, setAnswers)}
+                <div className="flex gap-2 flex-col">
+                  <input
+                    className="border-2 border-gray-200 rounded-lg p-2 m-2 w-full"
+                    key={field.id.toString()}
+                    value={answers[index]}
+                    type={field.type}
+                    onChange={(e) => {
+                      const ans = [...answers];
+                      const NewAns = ans.map((answer: string, i: number) => {
+                        return i === index ? (answer = e.target.value) : answer;
+                      });
+                      setAnswers(NewAns);
+                    }}
+                  ></input>
+                </div>
               </div>
             ) : (
               ""
