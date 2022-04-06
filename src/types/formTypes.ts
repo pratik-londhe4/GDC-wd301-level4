@@ -10,25 +10,25 @@ type textFieldTypes = "text" | "date" | "email";
 type textField = {
   id : number,
   kind : "text",
-  label : string
+  label : string,
   type : textFieldTypes,
-  value : string
+  value : string,
 }
 
 type dropDownField = {
 
   id : number,
   kind : "dropdown",
-  label : string
-  options : string[]
-  selected : string[]
+  label : string,
+  options : string[],
+  selected : string[],
   value : string
 
 }
 
 type radioButtonField = {
   id : number,
-  kind : "radio"
+  kind : "radio",
   label : string , 
   options : string[],
   value : string

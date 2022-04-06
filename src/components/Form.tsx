@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import FormField from "./FormField";
 import { FormData, Field } from "../types/formTypes";
 
-const fieldKinds: string[] = ["text", "dropdown"];
+const fieldKinds: string[] = ["text", "dropdown", "radio"];
 const formFields: Field[] = [
   { kind: "text", id: 1, label: "First Name", type: "text", value: "" },
   {
@@ -17,7 +17,7 @@ const formFields: Field[] = [
   {
     kind: "dropdown",
     id: 4,
-    label: "Priority",
+    label: "Priority of this",
     options: ["High", "Low"],
     selected: [""],
     value: "",
@@ -41,6 +41,47 @@ const saveFormData = (currentState: FormData) => {
   );
 
   saveLocalForms(updatedLocalForms);
+};
+
+const getNewField = (kind: string, label: string) => {
+  switch (kind) {
+    case "text": {
+      const textField: Field = {
+        id: Number(new Date()),
+        label: label,
+        kind: "text",
+        type: "text",
+        value: "",
+      };
+
+      return textField;
+    }
+
+    case "dropdown": {
+      const dropdownField: Field = {
+        id: Number(new Date()),
+        kind: "dropdown",
+        label: label,
+        options: [""],
+        selected: [""],
+        value: "",
+      };
+
+      return dropdownField;
+    }
+
+    case "radio": {
+      const radioField: Field = {
+        id: Number(new Date()),
+        kind: "radio",
+        label: label,
+        options: [""],
+        value: "",
+      };
+
+      return radioField;
+    }
+  }
 };
 export function Form(props: { id: any }) {
   const initialState: () => FormData = () => {
@@ -87,19 +128,12 @@ export function Form(props: { id: any }) {
     };
   }, [state]);
   const addField = (kind: string) => {
-    setState({
-      ...state,
-      formFields: [
-        ...state.formFields,
-        {
-          id: Number(new Date()),
-          label: newField,
-          kind: "text",
-          type: "text",
-          value: "",
-        },
-      ],
-    });
+    const emptyField = getNewField(kind, newField);
+    const newState = emptyField
+      ? { ...state, formFields: [...state.formFields, emptyField] }
+      : { ...state };
+
+    setState(newState);
 
     setNewField("");
   };
