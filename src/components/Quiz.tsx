@@ -11,64 +11,77 @@ const getCurrentFormFields = (id: number) => {
 const getCurrentQuizAnswers = (fields: Field[]) => {
   return fields.map((f) => (f.value = ""));
 };
+const renderField = (
+  field: Field,
+  index: number,
+  answers: string[],
+  setAnswers: CallableFunction
+) => {
+  switch (field.kind) {
+    case "text":
+      return (
+        <input
+          className="border-2 border-gray-200 rounded-lg p-2 m-2 w-full"
+          key={field.id.toString()}
+          value={answers[index]}
+          type={field.type}
+          onChange={(e) => {
+            const ans = [...answers];
+            const updatedAnswers = ans.map((field, i) => {
+              return i == index ? e.target.value : "";
+            });
+            setAnswers(updatedAnswers);
+          }}
+        ></input>
+      );
+
+    case "dropdown":
+      return (
+        <div>
+          <MultiSelect
+            index={index}
+            setAnswers={setAnswers}
+            field={field}
+            answers={answers}
+          />
+        </div>
+      );
+
+    case "radio":
+      return (
+        <div onChange={(e) => {}}>
+          {field.options.map((opt) => {
+            return (
+              <div>
+                <input
+                  type="radio"
+                  name="radio"
+                  value={opt}
+                  checked={opt == answers[index]}
+                  onChange={(e) => {
+                    const selected = e.target.value;
+
+                    const ans = [...answers];
+                    const updatedAnswers = ans.map((field, i) => {
+                      return i == index ? selected : "";
+                    });
+                    setAnswers(updatedAnswers);
+                  }}
+                ></input>
+                <label> {opt}</label>
+              </div>
+            );
+          })}
+        </div>
+      );
+  }
+};
 
 export default function Quiz(props: { id: number }) {
   const [fields, setFields] = useState(() => getCurrentFormFields(props.id));
   const [answers, setAnswers] = useState(() => getCurrentQuizAnswers(fields));
 
   const [index, setIndex] = useState(0);
-
-  const renderField = (
-    field: Field,
-    index: number,
-    answers: string[],
-    setAnswers: CallableFunction
-  ) => {
-    switch (field.kind) {
-      case "text":
-        return (
-          <input
-            className="border-2 border-gray-200 rounded-lg p-2 m-2 w-full"
-            key={field.id.toString()}
-            value={answers[index]}
-            type={field.type}
-            onChange={(e) => {
-              const ans = [...answers];
-              const updatedAnswers = ans.map((field, i) => {
-                return i == index ? e.target.value : "";
-              });
-              setAnswers(updatedAnswers);
-            }}
-          ></input>
-        );
-
-      case "dropdown":
-        return (
-          <div>
-            <MultiSelect
-              index={index}
-              setAnswers={setAnswers}
-              field={field}
-              answers={answers}
-            />
-          </div>
-        );
-
-      case "radio":
-        return (
-          <div>
-            {field.options.map((opt) => {
-              return (
-                <div>
-                  <input type="radio" name="radio"></input>
-                  <label> {opt}</label>
-                </div>
-              );
-            })}
-          </div>
-        );
-    }
-  };
 
   getCurrentFormFields(props.id);
   return (
