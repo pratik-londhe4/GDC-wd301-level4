@@ -18,8 +18,10 @@ const renderField = (
   setAnswers: CallableFunction
 ) => {
   switch (field.kind) {
-    case "text":
-      return (
+    case "text": {
+      return field.type == "textArea" ? (
+        <textarea></textarea>
+      ) : (
         <input
           className="border-2 border-gray-200 rounded-lg p-2 m-2 w-full"
           key={field.id.toString()}
@@ -34,6 +36,7 @@ const renderField = (
           }}
         ></input>
       );
+    }
 
     case "dropdown":
       return (
