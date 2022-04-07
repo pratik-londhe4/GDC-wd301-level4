@@ -198,11 +198,15 @@ export function Form(props: { id: any }) {
               );
             case "dropdown":
               return (
-                <div>
+                <div key={f.id}>
                   <select>
                     <option>Select</option>
                     {f.options.map((option) => {
-                      return <option value={option}>{option}</option>;
+                      return (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      );
                     })}
                   </select>
                   <button
@@ -216,11 +220,11 @@ export function Form(props: { id: any }) {
 
             case "radio":
               return (
-                <div>
+                <div key={f.id}>
                   <label>{f.label}</label>
                   {f.options.map((opt) => {
                     return (
-                      <div>
+                      <div key={opt}>
                         <input type="radio" name="radio"></input>
                         <label> {opt}</label>
                       </div>

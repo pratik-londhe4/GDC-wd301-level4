@@ -30,7 +30,11 @@ export default function MultiSelect(props: {
         >
           <option value="Select">Select</option>
           {field.options.map((option) => {
-            return <option value={option}>{option}</option>;
+            return (
+              <option value={option} key={option}>
+                {option}
+              </option>
+            );
           })}
         </select>
       ) : (

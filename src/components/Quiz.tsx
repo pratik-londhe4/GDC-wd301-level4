@@ -55,7 +55,7 @@ const renderField = (
         <div onChange={(e) => {}}>
           {field.options.map((opt) => {
             return (
-              <div>
+              <div key={opt}>
                 <input
                   type="radio"
                   name="radio"
