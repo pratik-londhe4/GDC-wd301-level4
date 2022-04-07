@@ -5,7 +5,7 @@ export type FormData =  {
 }
 
 
-type textFieldTypes = "text" | "date" | "email";
+type textFieldTypes = "text" | "date" | "email" | "textArea";
 
 type textField = {
   id : number,
@@ -33,5 +33,7 @@ type radioButtonField = {
   options : string[],
   value : string
 }
-export type Field =  textField | dropDownField | radioButtonField
+
+
+export type Field =  textField | dropDownField | radioButtonField 
 

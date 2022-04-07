@@ -13,7 +13,13 @@ const formFields: Field[] = [
     options: ["Morning", "Night"],
     value: "",
   },
-  { kind: "text", id: 3, label: "Email", type: "email", value: "" },
+  {
+    kind: "text",
+    id: 3,
+    label: "Tell us About Yourself",
+    type: "textArea",
+    value: "",
+  },
   {
     kind: "dropdown",
     id: 4,
@@ -199,6 +205,12 @@ export function Form(props: { id: any }) {
                       return <option value={option}>{option}</option>;
                     })}
                   </select>
+                  <button
+                    className="bg-blue-700 text-white font-bold rounded-xl py-2 px-4 my-4"
+                    onClick={(_) => removeField(f.id)}
+                  >
+                    Remove
+                  </button>
                 </div>
               );
 
