@@ -53,6 +53,20 @@ export default function Quiz(props: { id: number }) {
             />
           </div>
         );
+
+      case "radio":
+        return (
+          <div>
+            {field.options.map((opt) => {
+              return (
+                <div>
+                  <input type="radio" name="radio"></input>
+                  <label> {opt}</label>
+                </div>
+              );
+            })}
+          </div>
+        );
     }
   };
 
