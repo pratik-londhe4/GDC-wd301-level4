@@ -9,12 +9,14 @@ const getCurrentFormFields = (id: number) => {
 };
 
 const getCurrentQuizAnswers = (fields: Field[]) => {
-  return fields.map((f) => (f.value = ""));
+  return fields.map((f) =>
+    f.kind == "dropdown" ? (f.value = [""]) : (f.value = "")
+  );
 };
 const renderField = (
   field: Field,
   index: number,
-  answers: string[],
+  answers: (string[] | "")[],
   setAnswers: CallableFunction
 ) => {
   switch (field.kind) {
@@ -95,7 +97,7 @@ export default function Quiz(props: { id: number }) {
         <div className="p-2">
           {fields.map((field: Field, i: Number) => {
             return i === index ? (
-              <div key={field.value}>
+              <div key={Number(new Date())}>
                 <label key={field.label}>{field.label}</label>
                 <div className="flex gap-2 flex-col"></div>
                 {renderField(field, index, answers, setAnswers)}

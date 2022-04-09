@@ -10,6 +10,7 @@ export default function MultiSelect(props: {
   const setAnswers = props.setAnswers;
   const field = props.field;
   const index = props.index;
+
   return (
     <div>
       {field.kind == "dropdown" ? (

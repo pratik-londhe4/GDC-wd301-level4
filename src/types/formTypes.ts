@@ -22,7 +22,7 @@ type dropDownField = {
   label : string,
   options : string[],
   selected : string[],
-  value : string
+  value : string[] | string
 
 }
 
