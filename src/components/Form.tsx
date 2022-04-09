@@ -2,6 +2,7 @@ import { Link, navigate } from "raviger";
 import { useEffect, useRef, useState } from "react";
 import FormField from "./FormField";
 import { FormData, Field } from "../types/formTypes";
+import RadioButton from "./RadioButton";
 
 const fieldKinds: string[] = ["text", "dropdown", "radio"];
 const formFields: Field[] = [
@@ -220,16 +221,17 @@ export function Form(props: { id: any }) {
 
             case "radio":
               return (
-                <div key={f.id}>
-                  <label>{f.label}</label>
-                  {f.options.map((opt) => {
-                    return (
-                      <div key={opt}>
-                        <input type="radio" name="radio"></input>
-                        <label> {opt}</label>
-                      </div>
-                    );
-                  })}
+                <div>
+                  <RadioButton
+                    label={f.label}
+                    id={f.id}
+                    kind="radio"
+                    options={f.options}
+                    value={f.value}
+                    formId={state.id}
+                    onChangeCB={onInputFieldChangeCB}
+                    removeFieldCB={removeField}
+                  />
                 </div>
               );
           }
